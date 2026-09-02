@@ -7,6 +7,7 @@ your work, and `uv run python score.py` to see your current grade.
 from __future__ import annotations
 
 from typing import Callable
+import pytest
 
 
 # ── Part 1: Lists ─────────────────────────────────────────────────────────────
@@ -23,6 +24,8 @@ def flatten(nested: list[list]) -> list:
         >>> flatten([])
         []
     """
+   # for i in nested:
+
     return sum(nested, [])
 
 
@@ -38,7 +41,22 @@ def most_frequent(items: list) -> object:
         >>> most_frequent(['a', 'b', 'a', 'c', 'a'])
         'a'
     """
-    raise NotImplementedError("Implement most_frequent()")
+    #get rid of NotImplementedError and implement the function here
+    #raise NotImplementedError("Implement most_frequent()")
+   
+    if items==[]:
+        raise ValueError()
+    mostItem = {}
+    mostCount=0
+    for i in items:
+        thisCount=items.count(i)
+        if thisCount >= mostCount:
+            mostCount = thisCount
+            mostItem = i
+    
+    return mostItem
+    
+
 
 
 def running_average(numbers: list[float]) -> list[float]:
@@ -54,8 +72,15 @@ def running_average(numbers: list[float]) -> list[float]:
         >>> running_average([])
         []
     """
-    raise NotImplementedError("Implement running_average()")
+    #raise NotImplementedError("Implement running_average()")
+    result=[]
+    for i,v  in enumerate(numbers):
+        print(i, numbers[:i+1])
+        result.append(sum(numbers[:i+1])/(i+1))
+    
+    return result
 
+print("running average", running_average([10.0, 20.0, 30.0]))
 
 def chunk(items: list, size: int) -> list[list]:
     """Split items into sublists of length size.
