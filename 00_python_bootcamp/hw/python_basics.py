@@ -24,9 +24,12 @@ def flatten(nested: list[list]) -> list:
         >>> flatten([])
         []
     """
-   # for i in nested:
+    flattened = []
+    for i in nested:
+        for j in i:
+            flattened.append(j)
 
-    return sum(nested, [])
+    return flattened
 
 
 def most_frequent(items: list) -> object:
@@ -95,8 +98,33 @@ def chunk(items: list, size: int) -> list[list]:
         >>> chunk([], 4)
         []
     """
-    raise NotImplementedError("Implement chunk()")
+    #raise NotImplementedError("Implement chunk()")
 
+    
+    fullchunks = len(items)//size
+    partchunk = len(items)%size
+    print(fullchunks, partchunk)
+
+    chunked = [[0] * size for _ in range(fullchunks)]
+    if partchunk > 0: chunked.append([0]*partchunk)
+    print(chunked)
+    count =0
+    for i,chunk in enumerate(chunked):
+        for ii,v in enumerate(chunk):
+            chunked[i][ii]=items[count]
+            count+=1
+     
+
+    print(chunked)
+
+    #
+
+
+
+
+    return chunked
+chunk([1, 2, 3, 4, 5], 2)
+#chunk([1, 2, 3], 3)
 
 def rotate(items: list, k: int) -> list:
     """Rotate items left by k positions.
