@@ -83,7 +83,7 @@ def running_average(numbers: list[float]) -> list[float]:
     
     return result
 
-print("running average", running_average([10.0, 20.0, 30.0]))
+#print("running average", running_average([10.0, 20.0, 30.0]))
 
 def chunk(items: list, size: int) -> list[list]:
     """Split items into sublists of length size.
@@ -123,7 +123,7 @@ def chunk(items: list, size: int) -> list[list]:
 
 
     return chunked
-chunk([1, 2, 3, 4, 5], 2)
+#chunk([1, 2, 3, 4, 5], 2)
 #chunk([1, 2, 3], 3)
 
 def rotate(items: list, k: int) -> list:
@@ -140,8 +140,30 @@ def rotate(items: list, k: int) -> list:
         >>> rotate([1, 2, 3], 4)
         [2, 3, 1]
     """
-    raise NotImplementedError("Implement rotate()")
+    #raise NotImplementedError("Implement rotate()")
+    itemlen=len(items)
+    if(k>=0):
+        if (k>itemlen):
+            items.extend(items[:k])
+            items.extend(items[:k-itemlen])
+            print("extended",items)
+            del items[:k]
+            print("rotated",items)
 
+        else:    
+            items.extend(items[:k])
+            print("extended",items)
+            del items[:k]
+            print("rotated",items)
+    else:
+        items[:0]=items[k:]
+        print("extended",items)
+        del items[k:]
+        print("rotated",items)
+
+    return items
+
+#rotate([1, 2, 3], 4)
 
 def run_length_encode(items: list) -> list[tuple]:
     """Compress consecutive identical elements into (count, value) tuples.
@@ -154,8 +176,31 @@ def run_length_encode(items: list) -> list[tuple]:
         >>> run_length_encode([])
         []
     """
-    raise NotImplementedError("Implement run_length_encode()")
+    #raise NotImplementedError("Implement run_length_encode()")
+    if(items==[]):return []
+    run_len=[]
+    count=1
+    prev=items[0]
+    for i,v in enumerate(items):
+        if(i==0 and len(items)==1):
+            return [(1,v)]
+        if(i==0):continue
+        if(v==prev):
+            count+=1
+            if(i==len(items)-1):
+                run_len.append((count,prev))    
+        else:
+            run_len.append((count,prev))
+            count=1
+            if(i==len(items)-1):
+                run_len.append((count,v)) 
+        prev=v
+        
+    print("run_len",run_len)
+    return run_len
 
+#run_length_encode(['a', 'a', 'b', 'b', 'b', 'a'])
+#run_length_encode('x')
 
 def sliding_window(items: list, size: int) -> list[list]:
     """Return all consecutive windows of length size.
@@ -173,8 +218,39 @@ def sliding_window(items: list, size: int) -> list[list]:
         >>> sliding_window([], 2)
         []
     """
-    raise NotImplementedError("Implement sliding_window()")
+    #raise NotImplementedError("Implement sliding_window()")
+    windows=[]
+    
+    prev=items[0]
+    window=[prev]
+    i=1
+    while i < len(items):
+        v=items[i]
+    #for i,v in enumerate(items):
+        #if(i==0):continue
+        if(v==prev+1):
+            window.append(v)
+            #prev=v
+        
+        if (len(window)==size):
+            windows.append(window)
+            if (i>=len(items)-1):break
+            if(i>size):i=i-size
+            else: 
+               i=i+(2-size) #2
+               # i=i-1 #3
+            prev=items[i]
+            window=[prev]
+            continue
+        prev=v
+        print('windows',windows)
+        i+=1
+        
+    print(windows)
+    return windows
 
+#print(sliding_window([1, 2, 3], 2))
+print(sliding_window([1, 2, 3, 4, 5], 3))
 
 # ── Part 2: Dictionaries ──────────────────────────────────────────────────────
 
