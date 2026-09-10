@@ -233,7 +233,7 @@ def sliding_window(items: list, size: int) -> list[list]:
 #print(sliding_window([], 2))
 #print(sliding_window([1, 2, 3], 3))
 #print(sliding_window(list(range(10)), 4))
-print(sliding_window([1, 2], 3))
+#print(sliding_window([1, 2], 3))
 
 # ── Part 2: Dictionaries ──────────────────────────────────────────────────────
 
@@ -247,8 +247,19 @@ def count_occurrences(items: list) -> dict:
         >>> count_occurrences([])
         {}
     """
-    raise NotImplementedError("Implement count_occurrences()")
+    #raise NotImplementedError("Implement count_occurrences()")
+    keys = []
+    for i in items:
+        if keys.count(i) < 1:
+            keys.append(i)
+    print(keys)
 
+    count_dic = dict.fromkeys(keys)
+    for k,v in count_dic.items():
+        count_dic[k]=items.count(k)
+    
+    return count_dic 
+print(count_occurrences(['a', 'b', 'a', 'c', 'b', 'b']))
 
 def invert_dict(d: dict) -> dict:
     """Return a new dict with keys and values swapped.
