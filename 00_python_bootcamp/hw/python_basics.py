@@ -219,8 +219,18 @@ def sliding_window(items: list, size: int) -> list[list]:
         []
     """
     #raise NotImplementedError("Implement sliding_window()")
-    windows=[]
+    print("items",items)
+    windows = [[0] * size for _ in range(len(items[size:])+1)]
+    for i,v in enumerate(windows):
+        windows[i]=items[i:i+size]
+   
     
+    print("windows",windows)
+
+    
+
+    """
+    if (items==[]):return []
     prev=items[0]
     window=[prev]
     i=1
@@ -236,9 +246,9 @@ def sliding_window(items: list, size: int) -> list[list]:
             windows.append(window)
             if (i>=len(items)-1):break
             if(i>size):i=i-size
-            else: 
-               i=i+(2-size) #2
-               # i=i-1 #3
+            else: #this is where we send the loop back
+               i=i+(2-size) #size3
+               #i=i-1 #size3
             prev=items[i]
             window=[prev]
             continue
@@ -247,10 +257,15 @@ def sliding_window(items: list, size: int) -> list[list]:
         i+=1
         
     print(windows)
+    """
     return windows
 
 #print(sliding_window([1, 2, 3], 2))
-print(sliding_window([1, 2, 3, 4, 5], 3))
+#print(sliding_window([1, 2, 3, 4, 5], 3))
+#print(sliding_window([], 2))
+#print(sliding_window([1, 2, 3], 3))
+#print(sliding_window(list(range(10)), 4))
+print(sliding_window([1, 2], 3))
 
 # ── Part 2: Dictionaries ──────────────────────────────────────────────────────
 
