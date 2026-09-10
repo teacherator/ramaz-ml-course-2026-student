@@ -220,44 +220,12 @@ def sliding_window(items: list, size: int) -> list[list]:
     """
     #raise NotImplementedError("Implement sliding_window()")
     print("items",items)
+    if (len(items) < size or len(items)==0): return []
     windows = [[0] * size for _ in range(len(items[size:])+1)]
+    print("0win",windows)
     for i,v in enumerate(windows):
         windows[i]=items[i:i+size]
-   
     
-    print("windows",windows)
-
-    
-
-    """
-    if (items==[]):return []
-    prev=items[0]
-    window=[prev]
-    i=1
-    while i < len(items):
-        v=items[i]
-    #for i,v in enumerate(items):
-        #if(i==0):continue
-        if(v==prev+1):
-            window.append(v)
-            #prev=v
-        
-        if (len(window)==size):
-            windows.append(window)
-            if (i>=len(items)-1):break
-            if(i>size):i=i-size
-            else: #this is where we send the loop back
-               i=i+(2-size) #size3
-               #i=i-1 #size3
-            prev=items[i]
-            window=[prev]
-            continue
-        prev=v
-        print('windows',windows)
-        i+=1
-        
-    print(windows)
-    """
     return windows
 
 #print(sliding_window([1, 2, 3], 2))
