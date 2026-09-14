@@ -233,7 +233,7 @@ def sliding_window(items: list, size: int) -> list[list]:
 #print(sliding_window([], 2))
 #print(sliding_window([1, 2, 3], 3))
 #print(sliding_window(list(range(10)), 4))
-print(sliding_window([1, 2], 3))
+#print(sliding_window([1, 2], 3))
 
 # ── Part 2: Dictionaries ──────────────────────────────────────────────────────
 
@@ -270,12 +270,36 @@ def group_by(items: list[dict], key: str) -> dict[str, list[dict]]:
         ...     {'name': 'Carol', 'dept': 'Eng'},
         ... ]
         >>> result = group_by(records, 'dept')
+        {
+            'Eng':[
+                {'name': 'Alice', 'dept': 'Eng'},
+                {'name': 'Carol', 'dept': 'Eng'}
+                ],
+             'HR':[
+                {'name': 'Bob', 'dept': 'HR'}
+             ]
+        }
         >>> len(result['Eng'])
         2
         >>> len(result['HR'])
         1
+
     """
-    raise NotImplementedError("Implement group_by()")
+    
+    grouped= {}
+    for i in items:
+        for k,v in i.items():
+            if(k == key):grouped.setdefault(v,[]).append(i)
+           
+
+    return grouped
+records = [
+             {'name': 'Alice', 'dept': 'Eng'},
+             {'name': 'Bob', 'dept': 'HR'},
+             {'name': 'Carol', 'dept': 'Eng'},
+         ]
+
+#print(group_by(records, 'dept'))
 
 
 def deep_get(d: dict, path: str, default: object = None) -> object:
@@ -290,7 +314,27 @@ def deep_get(d: dict, path: str, default: object = None) -> object:
         -1
         >>> deep_get({'x': 10}, 'y')  # returns None (default)
     """
-    raise NotImplementedError("Implement deep_get()")
+    val={}
+    #turn path into a list
+    path_list = path.split('.')
+    try:
+        iter(d)
+    except TypeError:
+        return default
+   
+    
+    if(path_list[0] in d):
+        if (len(path_list)==1): 
+            val = d[path_list[0]]
+        else:
+            val = deep_get(d[path_list[0]], ".".join(path_list[1:]),default)
+    else:
+        return default
+
+    return val
+
+#print(deep_get({'a': {'b': {'c': 42}}}, 'a.b.c'))
+#print(deep_get({"a": 1}, "a.b", default=-1))
 
 
 def two_sum(nums: list[int], target: int) -> tuple[int, int] | None:
@@ -309,8 +353,19 @@ def two_sum(nums: list[int], target: int) -> tuple[int, int] | None:
         >>> two_sum([1, 2, 3], 100)
         None
     """
-    raise NotImplementedError("Implement two_sum()")
+    
+    
+    for i1,v1 in enumerate(nums):
+        for i2,v2 in enumerate(nums):
+            if(v2+v1==target):
+                if(i1<i2):
+                    return (i1,i2)
 
+    
+
+    return None
+#print(two_sum([2, 7, 11, 15], 9))
+print(two_sum([3, 2, 4], 6)) #(1, 2)
 
 # ── Part 3: Sets ──────────────────────────────────────────────────────────────
 
