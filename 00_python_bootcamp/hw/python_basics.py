@@ -259,7 +259,7 @@ def count_occurrences(items: list) -> dict:
         count_dic[k]=items.count(k)
     
     return count_dic 
-print(count_occurrences(['a', 'b', 'a', 'c', 'b', 'b']))
+#print(count_occurrences(['a', 'b', 'a', 'c', 'b', 'b']))
 
 def invert_dict(d: dict) -> dict:
     """Return a new dict with keys and values swapped.
@@ -268,9 +268,13 @@ def invert_dict(d: dict) -> dict:
         >>> invert_dict({'a': 1, 'b': 2})
         {1: 'a', 2: 'b'}
     """
-    raise NotImplementedError("Implement invert_dict()")
-
-
+    inver = {}
+    for k,v in d.items():
+        inver.update({k:v})
+       
+    return inver
+#print(invert_dict({'a': 1, 'b': 2}))
+    
 def group_by(items: list[dict], key: str) -> dict[str, list[dict]]:
     """Group a list of dicts by the value at the given key.
 
@@ -286,8 +290,23 @@ def group_by(items: list[dict], key: str) -> dict[str, list[dict]]:
         >>> len(result['HR'])
         1
     """
-    raise NotImplementedError("Implement group_by()")
+    keys = []
+    for i in items:
+        if keys.count(i) < 1:
+            keys.append(i[key])
+    print(keys)
 
+    grouped={}
+    return grouped
+
+
+records = [
+        {'name': 'Alice', 'dept': 'Eng'},
+        {'name': 'Bob', 'dept': 'HR'},
+        {'name': 'Carol', 'dept': 'Eng'},
+        ]
+result = group_by(records, 'dept')
+print(result)
 
 def deep_get(d: dict, path: str, default: object = None) -> object:
     """Retrieve a value from a nested dict using a dot-separated key path.
