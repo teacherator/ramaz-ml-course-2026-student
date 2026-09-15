@@ -276,7 +276,7 @@ def invert_dict(d: dict) -> dict:
 #print(invert_dict({'a': 1, 'b': 2}))
     
 def group_by(items: list[dict], key: str) -> dict[str, list[dict]]:
-    """Group a list of dicts by the value at the given key.
+    """Group a liqst of dicts by the value at the given key.
 
     Examples:
         >>> records = [
@@ -314,8 +314,8 @@ records = [
         {'name': 'Bob', 'dept': 'HR'},
         {'name': 'Carol', 'dept': 'Eng'},
         ]
-result = group_by(records, 'dept')
-print(result)
+#result = group_by(records, 'dept')
+#print(result)
 
 def deep_get(d: dict, path: str, default: object = None) -> object:
     """Retrieve a value from a nested dict using a dot-separated key path.
@@ -368,19 +368,25 @@ def two_sum(nums: list[int], target: int) -> tuple[int, int] | None:
         >>> two_sum([1, 2, 3], 100)
         None
     """
-    
+    sum_dict={}
     
     for i1,v1 in enumerate(nums):
-        for i2,v2 in enumerate(nums):
-            if(v2+v1==target):
-                if(i1<i2):
-                    return (i1,i2)
+        sum_dict[i1]=v1
+        if i1 > 0:
+            for i in range(0,i1):
+                if (sum_dict[i]+v1==target):
+                    print("in dict if" )
+                    return(i,i1)
+        #for i2,v2 in enumerate(nums):
+           # if(v2+v1==target):
+               # if(i1<i2):
+                   # return (i1,i2)
 
     
 
     return None
 #print(two_sum([2, 7, 11, 15], 9))
-print(two_sum([3, 2, 4], 6)) #(1, 2)
+#print(two_sum([3, 2, 4], 6)) #(1, 2)
 
 # ── Part 3: Sets ──────────────────────────────────────────────────────────────
 
@@ -396,8 +402,18 @@ def find_duplicates(items: list) -> set:
         >>> find_duplicates([])
         set()
     """
-    raise NotImplementedError("Implement find_duplicates()")
+    dupes=set()
+    for i in items:
+        count = 0
+        for ii in items:
+            if (i == ii): 
+                count+=1
+                if (count >1):dupes.add(i)
+                continue
 
+    return  dupes
+
+#print(find_duplicates([1, 2, 2, 3, 3, 3, 4]))
 
 def jaccard_similarity(a: set, b: set) -> float:
     """Return |A intersection B| / |A union B|.
@@ -405,14 +421,20 @@ def jaccard_similarity(a: set, b: set) -> float:
     Return 0.0 if both sets are empty.
 
     Examples:
-        >>> jaccard_similarity({1, 2, 3}, {2, 3, 4})
+        >>> jaccard_similarity({1, 2, 3}, {2, 3, 4}) 2+3 / 1+2+3+4
         0.5
         >>> jaccard_similarity({1, 2}, {3, 4})
         0.0
         >>> jaccard_similarity(set(), set())
         0.0
     """
-    raise NotImplementedError("Implement jaccard_similarity()")
+    sim=0.0
+    intersect = a.intersection(b)
+    union = a.union(b)
+    if(len(union)>0):
+        sim=len(intersect)/len(union)
+    return sim
+#print(jaccard_similarity({1, 2}, {1, 2, 3, 4}))   
 
 
 # ── Part 4: Higher-order functions ────────────────────────────────────────────
@@ -427,7 +449,10 @@ def apply_twice(f: Callable, x: object) -> object:
         >>> apply_twice(str.upper, 'hello')
         'HELLO'
     """
-    raise NotImplementedError("Implement apply_twice()")
+
+    return f(f(x))
+
+#print(apply_twice(str.upper, 'hello'))
 
 
 def make_multiplier(n: float) -> Callable[[float], float]:
@@ -443,7 +468,9 @@ def make_multiplier(n: float) -> Callable[[float], float]:
         >>> triple(4)
         12.0
     """
-    raise NotImplementedError("Implement make_multiplier()")
+    return lambda x: x * n
+#double = make_multiplier(2)
+#print(double(5))
 
 
 def pipeline(*funcs: Callable) -> Callable:
@@ -460,7 +487,17 @@ def pipeline(*funcs: Callable) -> Callable:
         >>> pipeline()(42)
         42
     """
-    raise NotImplementedError("Implement pipeline()")
+    
+    def composed(x):
+        result = x
+        for f in funcs:
+            result=f(result)
+        return result
+    return composed
+
+#add1 = lambda x: x + 1
+#double = lambda x: x * 2
+#print(pipeline(add1, double)(3))
 
 
 def memoize(f: Callable) -> Callable:
