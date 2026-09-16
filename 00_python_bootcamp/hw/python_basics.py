@@ -521,11 +521,11 @@ def memoize(f: Callable) -> Callable:
         16
     """
     cache = {} #mutable dict is globallike in scope
-    def getterSetter(f):
-        v=f(v)
-        if f not in cache:
-            cache[f]=v #adds to cache
-        return cache[f]
+    def getterSetter(arg):
+        
+        if arg not in cache:
+            cache[arg]=f(arg) #adds to cache
+        return cache[arg]
     
     return getterSetter
 
@@ -538,9 +538,9 @@ def tracked(x):
     call_count += 1
     return x ** 2
 cached = memoize(tracked)
-print(cached(4))
+print(cached(3))
 print("call count ",call_count)
-print(cached(4))   # should not increment call_count
+print(cached(5))   # should not increment call_count
 print("call count ",call_count)
 
 
