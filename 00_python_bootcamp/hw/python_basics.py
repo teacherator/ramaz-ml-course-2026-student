@@ -260,6 +260,7 @@ def count_occurrences(items: list) -> dict:
     
     return count_dic 
 #print(count_occurrences(['a', 'b', 'a', 'c', 'b', 'b']))
+#"Expected {{'a': 2, 'b': 3, 'c': 1}}
 
 def invert_dict(d: dict) -> dict:
     """Return a new dict with keys and values swapped.
@@ -270,7 +271,7 @@ def invert_dict(d: dict) -> dict:
     """
     inver = {}
     for k,v in d.items():
-        inver.update({k:v})
+        inver.update({v:k})
        
     return inver
 #print(invert_dict({'a': 1, 'b': 2}))
@@ -301,11 +302,17 @@ def group_by(items: list[dict], key: str) -> dict[str, list[dict]]:
     """
     keys = []
     for i in items:
-        if keys.count(i) < 1:
+        if keys.count(i[key]) < 1:
             keys.append(i[key])
     print(keys)
-
     grouped={}
+    for k in keys:
+        grouped[k]=[]
+        for i in items:
+            if i[key]==k: grouped[k].append(i)
+
+
+    
     return grouped
 
 
@@ -314,8 +321,8 @@ records = [
         {'name': 'Bob', 'dept': 'HR'},
         {'name': 'Carol', 'dept': 'Eng'},
         ]
-#result = group_by(records, 'dept')
-#print(result)
+result = group_by(records, 'dept')
+print(result)
 
 def deep_get(d: dict, path: str, default: object = None) -> object:
     """Retrieve a value from a nested dict using a dot-separated key path.
@@ -531,7 +538,7 @@ def memoize(f: Callable) -> Callable:
 
 
 
-""""
+"""
 call_count = 0
 def tracked(x):
     global call_count
@@ -540,10 +547,20 @@ def tracked(x):
 cached = memoize(tracked)
 print(cached(3))
 print("call count ",call_count)
-print(cached(5))   # should not increment call_count
+print(cached(3))   # should not increment call_count
 print("call count ",call_count)
 
+def tracked3(x):
+    global call_count
+    call_count += 1
+    return x ** 3
+cached = memoize(tracked3)
+print(cached(3))
+
+
 """
+
+
 # ── Part 5: Classes ───────────────────────────────────────────────────────────
 
 
@@ -625,5 +642,5 @@ class Gradebook:
             avg.append(sum(i.grades)/len(i.grades))
         return sum(avg)/len(avg)
 
-gb = Gradebook()
-print(gb.class_average())
+#gb = Gradebook()
+#print(gb.class_average())
