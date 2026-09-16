@@ -531,7 +531,7 @@ def memoize(f: Callable) -> Callable:
 
 
 
-
+""""
 call_count = 0
 def tracked(x):
     global call_count
@@ -543,8 +543,7 @@ print("call count ",call_count)
 print(cached(5))   # should not increment call_count
 print("call count ",call_count)
 
-
-
+"""
 # ── Part 5: Classes ───────────────────────────────────────────────────────────
 
 
@@ -560,27 +559,37 @@ class Student:
 
     def average(self) -> float:
         """Return the mean of all grades. Returns 0.0 if grades is empty."""
-        raise NotImplementedError("Implement Student.average()")
+        if (self.grades == []):return 0.0
+        else: return sum(self.grades)/len(self.grades)
 
     def highest(self) -> float:
         """Return the highest grade. Returns 0.0 if grades is empty."""
-        raise NotImplementedError("Implement Student.highest()")
+        
+        if (self.grades == []):return 0.0
+        else: return max(self.grades)
 
     def letter_grade(self) -> str:
         """Return the letter grade for this student's average.
 
         Boundaries: A >= 90, B >= 80, C >= 70, D >= 60, F otherwise.
         """
-        raise NotImplementedError("Implement Student.letter_grade()")
+        if self.average() >= 90: return "A"
+        elif self.average() >= 80: return "B"
+        elif self.average() >= 70: return "C"
+        elif self.average() >= 60: return "D"
+        else: return "F"
 
     def __repr__(self) -> str:
         """Return a string like: Student('Alice', avg=88.5)"""
-        raise NotImplementedError("Implement Student.__repr__()")
+        return str(self.name)+", "+str(self.average())
 
     def __lt__(self, other: "Student") -> bool:
         """Compare students by average grade (enables sorted() and min/max)."""
-        raise NotImplementedError("Implement Student.__lt__()")
-
+        if not isinstance(other, Student):
+            return NotImplemented  # Restricts comparison to only other Students
+        return self.average() < other.average()
+#s = Student("Alice", [80.0, 90.0])
+#print(repr(s))
 
 class Gradebook:
     """Manages a collection of students, keyed by name."""
@@ -593,12 +602,28 @@ class Gradebook:
 
         Raises ValueError if a student with the same name already exists.
         """
-        raise NotImplementedError("Implement Gradebook.add_student()")
+        if student.name in self.students: raise ValueError
+        else:
+            self.students[student.name]=student
 
     def top_students(self, n: int) -> list[Student]:
         """Return the n students with the highest averages, in descending order."""
-        raise NotImplementedError("Implement Gradebook.top_students()")
+        s=self.students
+        highest = sorted(self.students.items(), key= lambda item: sum(item[1].grades)/len(item[1].grades),reverse=True)
+        hi =[]
+        for i in highest:
+            hi.append((i[1]))
+        return hi[:n]
+        
+
 
     def class_average(self) -> float:
         """Return the mean of all student averages. Returns 0.0 if empty."""
-        raise NotImplementedError("Implement Gradebook.class_average()")
+        if self.students=={}: return 0.0
+        avg=[]
+        for i in self.students.values():
+            avg.append(sum(i.grades)/len(i.grades))
+        return sum(avg)/len(avg)
+
+gb = Gradebook()
+print(gb.class_average())
