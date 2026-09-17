@@ -4,11 +4,11 @@ Complete the functions below. Each function has a docstring describing
 what it should do, along with examples. Run `uv run pytest` to check
 your work, and `uv run python score.py` to see your current grade.
 """
+
 from __future__ import annotations
 
 from typing import Callable
 import pytest
-
 
 # ── Part 1: Lists ─────────────────────────────────────────────────────────────
 
