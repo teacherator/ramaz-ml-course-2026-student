@@ -43,7 +43,19 @@ def load_songs(path: Path) -> list[dict]:
         >>> isinstance(songs[0]["year"], int)
         True
     """
-    raise NotImplementedError("Implement load_songs()")
+    songlist=[]
+    with open(path, newline='') as csvfile:
+        songreader = csv.DictReader(csvfile)
+        
+        for row in songreader:
+            
+            row['year']= int(row['year'])
+            row['weeks_on_chart']= int(row['weeks_on_chart'])
+            row['peak_position']= int(row['peak_position'])
+            row['streams_millions']= float(row['streams_millions'])
+            print(row)
+           
+    return songlist
 
 
 class SongRanker:
@@ -77,6 +89,8 @@ class SongRanker:
             3
             >>> top[0]["streams_millions"] >= top[1]["streams_millions"]
             True
+
+        https://docs.python.org/3/library/csv.html
         """
         raise NotImplementedError("Implement SongRanker.rank()")
 
