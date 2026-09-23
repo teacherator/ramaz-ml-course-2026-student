@@ -54,6 +54,7 @@ def load_songs(path: Path) -> list[dict]:
             row['peak_position']= int(row['peak_position'])
             row['streams_millions']= float(row['streams_millions'])
             print(row)
+            songlist.append(row)
            
     return songlist
 
