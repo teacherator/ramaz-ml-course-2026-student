@@ -53,7 +53,7 @@ def load_songs(path: Path) -> list[dict]:
             row['weeks_on_chart']= int(row['weeks_on_chart'])
             row['peak_position']= int(row['peak_position'])
             row['streams_millions']= float(row['streams_millions'])
-            print(row)
+            #print(row)
             songlist.append(row)
            
     return songlist
@@ -71,7 +71,9 @@ class SongRanker:
 
         Subclasses must override this.
         """
-        raise NotImplementedError("Implement SongRanker.score()")
+        raise NotImplementedError("not implemented")
+ 
+       
 
     def rank(self, songs: list[dict], n: int = 10) -> list[dict]:
         """Return the top n songs, highest score() first.
@@ -92,22 +94,28 @@ class SongRanker:
             True
 
         https://docs.python.org/3/library/csv.html
+
+
         """
-        raise NotImplementedError("Implement SongRanker.rank()")
+       
+       
+
+        return sorted(songs, key=lambda song: self.score(song), reverse=True)[:n]
+
 
 
 class StreamsRanker(SongRanker):
     """Ranks songs by total streams_millions."""
 
     def score(self, song: dict) -> float:
-        raise NotImplementedError("Implement StreamsRanker.score()")
+        return  song["streams_millions"]
 
 
 class LongevityRanker(SongRanker):
     """Ranks songs by weeks_on_chart (how long they stuck around)."""
 
     def score(self, song: dict) -> float:
-        raise NotImplementedError("Implement LongevityRanker.score()")
+        return song["weeks_on_chart"]
 
 
 def avg_weeks_by_genre(songs: list[dict]) -> dict[str, float]:
@@ -125,8 +133,33 @@ def avg_weeks_by_genre(songs: list[dict]) -> dict[str, float]:
         True
         >>> all(isinstance(v, float) for v in avgs.values())
         True
+
+        return {'Pop':39.0, 'Rock', 23.0}
+
+        {'title': 'Slow It Down', 'artist': 'Benson Boone', 'genre': 'Pop', 'year': '2024',
+          'weeks_on_chart': '10', 'peak_position': '12', 'streams_millions': '350.0'}
+
+          for each genre we need the total weeks / number of songs
+          so should we first make a list of dicts like
+          [
+          {'genre':'Pop', 'songs':[dict]}
+          ]
     """
-    raise NotImplementedError("Implement avg_weeks_by_genre()")
+   
+    #print(hashable_data)
+    #get a listy of genres
+    #genres=set(s['genre'] for s in songs )
+    avg={}
+    tweeks = Counter()
+    nweeks = Counter(s["genre"] for s in songs if "genre" in s)
+    for s in songs:
+        tweeks[s['genre']]+=s['weeks_on_chart']
+       
+    
+    for g in tweeks:
+        avg[g]=tweeks[g]/nweeks[g]
+   
+    return avg
 
 
 def most_streamed_artist(songs: list[dict]) -> str:
@@ -145,7 +178,13 @@ def most_streamed_artist(songs: list[dict]) -> str:
         >>> isinstance(artist, str)
         True
     """
-    raise NotImplementedError("Implement most_streamed_artist()")
+    #artists = Counter(s["artist"] for s in songs if "artist" in s)
+    artists = Counter()
+    for s in songs:
+        artists[s['artist']]+=s['streams_millions']
+    #print(artists.most_common(1)[0][0])
+
+    return artists.most_common(1)[0][0]
 
 
 def hits_per_year(songs: list[dict], max_position: int = 10) -> dict[int, int]:
@@ -162,13 +201,16 @@ def hits_per_year(songs: list[dict], max_position: int = 10) -> dict[int, int]:
 
     Returns:
         A dict mapping year (int) to hit count (int).
+        {1970:1000,1971:2000}
 
     Example:
         >>> hits = hits_per_year(songs, max_position=5)
         >>> all(isinstance(k, int) for k in hits.keys())
         True
     """
-    raise NotImplementedError("Implement hits_per_year()")
+  
+    hits = Counter(s["year"] for s in songs if s["peak_position"] <= max_position)
+    return dict(hits)
 
 
 # ── Main: print results for writeup.md ────────────────────────────────────────
