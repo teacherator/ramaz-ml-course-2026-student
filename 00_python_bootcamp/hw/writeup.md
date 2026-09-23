@@ -14,7 +14,7 @@ below. Replace each `[your answer here]` with your response.
 **Which genre averaged the most weeks on the Billboard chart, and how many
 songs is that average computed from?**
 
-[your answer here]
+Afrobeats spent the most weeks, 30, on the chart, and it was all from one song. Must have been Fela!
 
 ---
 
@@ -22,7 +22,7 @@ songs is that average computed from?**
 
 **Who was the most-streamed artist in the dataset (by total streams across all their songs)?**
 
-[your answer here]
+Taylor Swift (6560M total streams)
 
 ---
 
@@ -30,7 +30,7 @@ songs is that average computed from?**
 
 **Which year had the most top-10 hits (songs that peaked at position 10 or better)?**
 
-[your answer here]
+ 2024: 26 hit(s)
 
 ---
 
@@ -44,7 +44,7 @@ you assumed going in, or that is more interesting than you expected. Explain:
 - What the data actually showed.
 - What might explain the difference.
 
-[your answer here]
+
 
 ---
 
