@@ -14,7 +14,7 @@ below. Replace each `[your answer here]` with your response.
 **Which genre averaged the most weeks on the Billboard chart, and how many
 songs is that average computed from?**
 
-Afrobeats spent the most weeks, 30, on the chart, and it was all from one song. Must have been Fela!
+Afrobeats spent the most weeks, 30, on the chart, and it was all from one song. 
 
 ---
 
@@ -43,6 +43,10 @@ you assumed going in, or that is more interesting than you expected. Explain:
 - What you expected to see, and why.
 - What the data actually showed.
 - What might explain the difference.
+
+I expected that the genre with 'most weeks on chart' would be one with many songs, but that genre only had one sone in the csv.
+
+Calm Down,Rema,Afrobeats,2023,30,3,950.0
 
 
 
