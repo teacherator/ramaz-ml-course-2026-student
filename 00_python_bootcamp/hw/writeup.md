@@ -44,9 +44,9 @@ you assumed going in, or that is more interesting than you expected. Explain:
 - What the data actually showed.
 - What might explain the difference.
 
-I expected that the genre with 'most weeks on chart' would be one with many songs, but that genre only had one sone in the csv.
+I expected that the genre with 'Average Weeks on Chart by Genre' would be a genre with many songs, like pop or hip-hop. However, the data showed that the genre with the highest only had one song in the data set. (Calm Down,Rema,Afrobeats,2023,30,3,950.) This difference can be explained by how the average is calculated. Because the total weeks for a genre is divide by the number of songs in a genre, a genre with only one song has an advantage. If there was one more Afrobeats song with a low week on chart, it would not have been at the top.
 
-Calm Down,Rema,Afrobeats,2023,30,3,950.0
+
 
 
 
@@ -66,9 +66,23 @@ in `most_streamed_artist`. Would `collections.Counter` have made any part of thi
 easier, and if so, which part (drawing on how you'd extend your own `count_occurrences`
 to do the same thing)?
 
+In count_occurrences I used two for loops. In the first loop I looped through items to create a list of unique keys. I converted the list of keys into a dict using dict.fromkeys(keys) and looped though the dict using dictionary.items().I determined and assigned the key value from the count of keys using items.count().
+
+In most_streamed_artist, I only needed one loop to solve a similar problem. I created a blank counter, then looped through the song list. For each song, I added the artist as a key to the counter, if it wasn't there. Then I incremented the value by adding the value of streams_millions to the exsiting value. 
+
+In `avg_weeks_by_genre` the process was the same. I looped through the songs list to increment the number of weeks on the chart for each genre. 
+
+Counter made the agregation easier and probably faster. I'd have to look into the code behind counter to be sure. If I were to extend count_occurance, I would use counter, although I might just use counter insead of count_occurances.
+
+
 **b)** `StreamsRanker` and `LongevityRanker` both subclass `SongRanker` and share its
 `rank` method, overriding only `score`. If they did **not** share a common base class —
 if you had written two separate, unrelated classes instead — what code would you have
 had to duplicate? What does inheritance buy you here?
 
 [your answer here]
+We would have had to duplicate the sorting code for rank: 
+
+return sorted(songs, key=lambda song: self.score(song), reverse=True)[:n]
+
+Inheritance allows us not to have the duplicate code, which also means that if we change the one sorting method, it changes for all inherited classes. It also would allow us to extend the class further, either with more inherited clases or adding more shred methods.

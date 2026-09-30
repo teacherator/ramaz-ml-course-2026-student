@@ -259,7 +259,7 @@ def count_occurrences(items: list) -> dict:
         count_dic[k]=items.count(k)
     
     return count_dic 
-#print(count_occurrences(['a', 'b', 'a', 'c', 'b', 'b']))
+print(count_occurrences(['a', 'b', 'a', 'c', 'b', 'b']))
 #"Expected {{'a': 2, 'b': 3, 'c': 1}}
 
 def invert_dict(d: dict) -> dict:
