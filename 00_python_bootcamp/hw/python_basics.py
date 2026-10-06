@@ -83,7 +83,7 @@ def running_average(numbers: list[float]) -> list[float]:
     
     return result
 
-#print("running average", running_average([10.0, 20.0, 30.0]))
+print("running average", running_average([10.0, 20.0, 30.0]))
 
 def chunk(items: list, size: int) -> list[list]:
     """Split items into sublists of length size.
@@ -221,6 +221,7 @@ def sliding_window(items: list, size: int) -> list[list]:
     #raise NotImplementedError("Implement sliding_window()")
     print("items",items)
     if (len(items) < size or len(items)==0): return []
+    
     windows = [[0] * size for _ in range(len(items[size:])+1)]
     print("0win",windows)
     for i,v in enumerate(windows):

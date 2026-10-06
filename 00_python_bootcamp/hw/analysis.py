@@ -150,14 +150,14 @@ def avg_weeks_by_genre(songs: list[dict]) -> dict[str, float]:
     #get a listy of genres
     #genres=set(s['genre'] for s in songs )
     avg={}
-    tweeks = Counter()
-    nweeks = Counter(s["genre"] for s in songs if "genre" in s)#counts the number of songs with each genre
+    tweeks = Counter() 
+    nsongs = Counter(s["genre"] for s in songs if "genre" in s)#counts the number of songs with each genre
     for s in songs:
         tweeks[s['genre']]+=s['weeks_on_chart']
        
     
     for g in tweeks:
-        avg[g]=tweeks[g]/nweeks[g]
+        avg[g]=tweeks[g]/nsongs[g]
    
     return avg
 
