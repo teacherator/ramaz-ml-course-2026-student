@@ -40,8 +40,12 @@ def vector_add(u: list[float], v: list[float]) -> list[float]:
         Think about how to iterate over two lists simultaneously, pairing their
         elements at each position.
     """
-    raise NotImplementedError("Implement vector_add()")
+    result=[0]*len(u)
+    for i in range(len(u)):
+        result[i]=u[i]+v[i]
 
+    return result
+#print(vector_add([1.0, 2.0], [3.0, 4.0]))
 
 def scalar_multiply(c: float, v: list[float]) -> list[float]:
     """Scale every element of a vector by a scalar.
@@ -61,8 +65,12 @@ def scalar_multiply(c: float, v: list[float]) -> list[float]:
         You know how to visit every element in a list. What would you do
         to each one?
     """
-    raise NotImplementedError("Implement scalar_multiply()")
+    for i,n in enumerate(v):
+        v[i]=c*n
 
+    return v
+
+#print(scalar_multiply(3.0, [1.0, 2.0, 3.0]))
 
 def dot_product(u: list[float], v: list[float]) -> float:
     """Compute the dot product (inner product) of two vectors.
@@ -85,8 +93,16 @@ def dot_product(u: list[float], v: list[float]) -> float:
         You already know how to pair elements from two lists. The dot product
         needs one more step: combine those products into a single number.
     """
-    raise NotImplementedError("Implement dot_product()")
+    if len(u) != len(v):
+        raise ValueError
+    result=0
+    for i,n in enumerate(u):
+        result += u[i] * v[i]
 
+
+    return result
+
+#print(dot_product([1.0, 2.0, 3.0], [4.0, 5.0, 6.0]))
 
 def vector_magnitude(v: list[float]) -> float:
     """Compute the Euclidean (L2) magnitude (length) of a vector.
@@ -107,7 +123,15 @@ def vector_magnitude(v: list[float]) -> float:
         Look at the formula in the docstring — it expresses magnitude in terms
         of an operation you've already implemented.
     """
-    raise NotImplementedError("Implement vector_magnitude()")
+
+
+    result=0
+    for i,n in enumerate(v):
+        result += v[i] ** 2
+
+
+    return result ** .5
+#print(vector_magnitude([3.0, 4.0]))
 
 
 def normalize_vector(v: list[float]) -> list[float]:
@@ -134,7 +158,14 @@ def normalize_vector(v: list[float]) -> list[float]:
         to be true about the magnitude before dividing, and what should happen
         if that condition fails.
     """
-    raise NotImplementedError("Implement normalize_vector()")
+    mag = vector_magnitude(v)
+    if mag == 0: raise ValueError
+
+    for i,r in enumerate(v):
+        v[i]=r/mag
+
+    return v
+#print(normalize_vector([3.0, 4.0]))
 
 
 def matrix_add(A: list[list[float]], B: list[list[float]]) -> list[list[float]]:
@@ -158,7 +189,13 @@ def matrix_add(A: list[list[float]], B: list[list[float]]) -> list[list[float]]:
         You have a function that adds two vectors. How could you apply it to
         each pair of corresponding rows?
     """
-    raise NotImplementedError("Implement matrix_add()")
+    result = [0]*len(A)
+    for i,v in enumerate(A):
+        result[i]=vector_add(A[i],B[i])
+
+    
+    return result
+#print(matrix_add([[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]))
 
 
 def matrix_vector_multiply(A: list[list[float]], v: list[float]) -> list[float]:
@@ -184,7 +221,14 @@ def matrix_vector_multiply(A: list[list[float]], v: list[float]) -> list[float]:
         computes exactly what each output element requires — apply it across the
         rows.
     """
-    raise NotImplementedError("Implement matrix_vector_multiply()")
+    result = [0]*len(v)
+    for i,n in enumerate(A):
+        result[i]= dot_product(v,A[i])
+
+
+    return result
+#print(matrix_vector_multiply([[1.0, 2.0], [3.0, 4.0]], [1.0, 1.0]))
+
 
 
 def matrix_multiply(A: list[list[float]], B: list[list[float]]) -> list[list[float]]:
@@ -210,7 +254,22 @@ def matrix_multiply(A: list[list[float]], B: list[list[float]]) -> list[list[flo
         could turn columns into something easier to work with. You may implement
         the next helper first.
     """
-    raise NotImplementedError("Implement matrix_multiply()")
+    transB=matrix_transpose(B)
+    result = [[0]*len(B[0]) for _ in range(len(A))]
+
+    for i,v in enumerate(result):
+        for ii,vv in enumerate(v):
+            result[i][ii]=dot_product(A[i],transB[ii])
+
+
+    # for i,v in enumerate(result):
+    #     for ii,vv in enumerate(v):
+    #         for iii,vvv in enumerate(A):
+    #             result[i][ii]+=A[i][iii]*transB[ii][iii] 
+
+
+
+    return result
 
 
 def matrix_transpose(A: list[list[float]]) -> list[list[float]]:
@@ -236,7 +295,32 @@ def matrix_transpose(A: list[list[float]]) -> list[list[float]]:
         separate arguments. Either way, check the type of what you build
         against this function's return annotation before you trust it.
     """
-    raise NotImplementedError("Implement matrix_transpose()")
+    #result0 = [[0]*len(A)]*len(A[0]) #this looks the same as the result below, but it actually includes references to A in stead of just 0s which gives unexpected results in the loop
+    result = [[0]*len(A) for _ in range(len(A[0]))]
+    m = len(A)
+    n = len(A[0])
+
+    # n = len(result)
+    # m = len(result[0])
+    # for j in range(n):
+    #     for i in range(m):
+    #         result[j][i] = A[i][j]
+    #return new_func(A, result)
+
+
+    for i,v in enumerate(result):
+        for ii,vv in enumerate(v):
+            result[i][ii]=A[ii][i]
+
+    return result
+#print(matrix_transpose([[7.0, 8.0], [9.0, 10.0], [11.0, 12.0]]))
+#print(matrix_multiply([[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]))
+
+# A is 2x3, B is 3x2 -> result is 2x2
+# Expected: [[58, 64], [139, 154]]
+A = [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
+B = [[7.0, 8.0], [9.0, 10.0], [11.0, 12.0]]
+print(matrix_multiply(A, B), "expected [[58.0, 64.0], [139.0, 154.0]]")
 
 
 # ── Part 2: PyTorch Mirrors ───────────────────────────────────────────────────
