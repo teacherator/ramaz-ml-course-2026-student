@@ -317,10 +317,10 @@ def matrix_transpose(A: list[list[float]]) -> list[list[float]]:
 #print(matrix_multiply([[1.0, 2.0], [3.0, 4.0]], [[5.0, 6.0], [7.0, 8.0]]))
 
 # A is 2x3, B is 3x2 -> result is 2x2
-# Expected: [[58, 64], [139, 154]]
-A = [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
-B = [[7.0, 8.0], [9.0, 10.0], [11.0, 12.0]]
-print(matrix_multiply(A, B), "expected [[58.0, 64.0], [139.0, 154.0]]")
+# # Expected: [[58, 64], [139, 154]]
+# A = [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
+# B = [[7.0, 8.0], [9.0, 10.0], [11.0, 12.0]]
+# print(matrix_multiply(A, B), "expected [[58.0, 64.0], [139.0, 154.0]]")
 
 
 # ── Part 2: PyTorch Mirrors ───────────────────────────────────────────────────
