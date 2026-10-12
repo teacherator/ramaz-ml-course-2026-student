@@ -348,8 +348,8 @@ def dot_product_torch(u: torch.Tensor, v: torch.Tensor) -> torch.Tensor:
         In Part 1 this took you a comprehension and a sum. PyTorch has a single
         function for it — check the lecture cheat sheet.
     """
-    raise NotImplementedError("Implement dot_product_torch()")
-
+    return torch.matmul(u,v)
+print(dot_product_torch(torch.tensor([1.0, 2.0, 3.0]), torch.tensor([4.0, 5.0, 6.0])))
 
 def vector_magnitude_torch(v: torch.Tensor) -> torch.Tensor:
     """Same operation as vector_magnitude (Part 1), now using PyTorch.
