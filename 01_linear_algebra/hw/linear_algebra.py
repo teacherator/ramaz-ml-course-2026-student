@@ -255,7 +255,7 @@ def matrix_multiply(A: list[list[float]], B: list[list[float]]) -> list[list[flo
         the next helper first.
     """
     transB=matrix_transpose(B)
-    result = [[0]*len(B[0]) for _ in range(len(A))]
+    result = [[0]*len(B[0]) for _ in range(len(A))] #get 000 matrix
 
     for i,v in enumerate(result):
         for ii,vv in enumerate(v):
@@ -348,8 +348,9 @@ def dot_product_torch(u: torch.Tensor, v: torch.Tensor) -> torch.Tensor:
         In Part 1 this took you a comprehension and a sum. PyTorch has a single
         function for it — check the lecture cheat sheet.
     """
-    return torch.matmul(u,v)
-print(dot_product_torch(torch.tensor([1.0, 2.0, 3.0]), torch.tensor([4.0, 5.0, 6.0])))
+    return torch.dot(u,v)
+    
+#print(dot_product_torch(torch.tensor([1.0, 2.0, 3.0]), torch.tensor([4.0, 5.0, 6.0])))
 
 def vector_magnitude_torch(v: torch.Tensor) -> torch.Tensor:
     """Same operation as vector_magnitude (Part 1), now using PyTorch.
@@ -368,8 +369,9 @@ def vector_magnitude_torch(v: torch.Tensor) -> torch.Tensor:
         The norm of a vector is such a common operation that torch.linalg
         provides it directly.
     """
-    raise NotImplementedError("Implement vector_magnitude_torch()")
+    return torch.linalg.norm(v)
 
+#print(vector_magnitude_torch(torch.tensor([3.0, 4.0])))
 
 def normalize_vector_torch(v: torch.Tensor) -> torch.Tensor:
     """Same operation as normalize_vector (Part 1), now using PyTorch.
@@ -391,7 +393,11 @@ def normalize_vector_torch(v: torch.Tensor) -> torch.Tensor:
         Dividing a tensor by a scalar divides every element — no loop needed.
         Remember to check for the zero vector first, just like in Part 1.
     """
-    raise NotImplementedError("Implement normalize_vector_torch()")
+    if torch.linalg.norm(v) == 0: raise ValueError
+
+    return v/torch.linalg.norm(v)
+
+#print(normalize_vector_torch(torch.tensor([3.0, 4.0])))
 
 
 def matrix_vector_multiply_torch(A: torch.Tensor, v: torch.Tensor) -> torch.Tensor:
@@ -413,7 +419,10 @@ def matrix_vector_multiply_torch(A: torch.Tensor, v: torch.Tensor) -> torch.Tens
     Hint:
         The @ operator from lecture handles matrix-vector products too.
     """
-    raise NotImplementedError("Implement matrix_vector_multiply_torch()")
+    return torch.matmul(A,v)
+
+#A = torch.tensor([[1.0, 2.0], [3.0, 4.0]])
+#print(matrix_vector_multiply_torch(A, torch.tensor([1.0, 1.0])))
 
 
 def matrix_multiply_torch(A: torch.Tensor, B: torch.Tensor) -> torch.Tensor:
@@ -436,8 +445,10 @@ def matrix_multiply_torch(A: torch.Tensor, B: torch.Tensor) -> torch.Tensor:
         tensor([[19., 22.],
                 [43., 50.]])
     """
-    raise NotImplementedError("Implement matrix_multiply_torch()")
-
+    return A @ B
+A = torch.tensor([[1.0, 2.0], [3.0, 4.0]])
+B = torch.tensor([[5.0, 6.0], [7.0, 8.0]])
+#print(matrix_multiply_torch(A, B))
 
 def matrix_transpose_torch(A: torch.Tensor) -> torch.Tensor:
     """Same operation as matrix_transpose (Part 1), now using PyTorch.
@@ -458,7 +469,7 @@ def matrix_transpose_torch(A: torch.Tensor) -> torch.Tensor:
         In Part 1 this took you a whole comprehension. In PyTorch the transpose
         is a single attribute access — see the lecture cheat sheet.
     """
-    raise NotImplementedError("Implement matrix_transpose_torch()")
+    return 
 
 
 # ── Part 2b: Harder Problems ──────────────────────────────────────────────────
