@@ -469,7 +469,9 @@ def matrix_transpose_torch(A: torch.Tensor) -> torch.Tensor:
         In Part 1 this took you a whole comprehension. In PyTorch the transpose
         is a single attribute access — see the lecture cheat sheet.
     """
-    return 
+    return torch.transpose(A,0,1)
+
+#print(matrix_transpose_torch(torch.tensor([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])))
 
 
 # ── Part 2b: Harder Problems ──────────────────────────────────────────────────
@@ -512,7 +514,15 @@ def cosine_similarity(u: torch.Tensor, v: torch.Tensor) -> float:
         Part 2. Handle the zero-vector case before dividing. Do not use
         torch.nn.functional.cosine_similarity.
     """
-    raise NotImplementedError("Implement cosine_similarity()")
+    if torch.linalg.norm(u) == 0 or torch.linalg.norm(v)==0:
+        raise ValueError
+
+  
+    return (torch.dot(u,v) / ( torch.linalg.norm(v) * torch.linalg.norm(u) )).item()
+
+
+print(cosine_similarity(torch.tensor([1.0, 0.0]), torch.tensor([1.0, 0.0])))
+print(cosine_similarity(torch.tensor([1.0, 0.0]), torch.tensor([0.0, 1.0])))
 
 
 def row_normalize(A: torch.Tensor) -> torch.Tensor:
@@ -548,8 +558,26 @@ def row_normalize(A: torch.Tensor) -> torch.Tensor:
         gives you a tensor of booleans) and raise ValueError.
         Do not use torch.nn.functional.normalize.
     """
-    raise NotImplementedError("Implement row_normalize()")
+    """ loop version
+    for i,row in enumerate(A):
+        mag = torch.linalg.norm(row)
+        if mag==0:
+            raise ValueError
+        A[i]=row/mag
+"""
+    N = torch.linalg.norm(A, dim=1, keepdim=True) #not sure why the keepdim worked
+    if 0 in N: raise ValueError
+    result = A / N
 
+    return result
+
+
+
+    
+
+
+#A = torch.tensor([[3.0, 4.0], [0.0, 2.0]])
+#print(row_normalize(A))
 
 def pairwise_distances(A: torch.Tensor) -> torch.Tensor:
     """Compute the pairwise Euclidean distance between every row of A.
