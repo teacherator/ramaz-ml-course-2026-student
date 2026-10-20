@@ -521,8 +521,8 @@ def cosine_similarity(u: torch.Tensor, v: torch.Tensor) -> float:
     return (torch.dot(u,v) / ( torch.linalg.norm(v) * torch.linalg.norm(u) )).item()
 
 
-print(cosine_similarity(torch.tensor([1.0, 0.0]), torch.tensor([1.0, 0.0])))
-print(cosine_similarity(torch.tensor([1.0, 0.0]), torch.tensor([0.0, 1.0])))
+#print(cosine_similarity(torch.tensor([1.0, 0.0]), torch.tensor([1.0, 0.0])))
+#print(cosine_similarity(torch.tensor([1.0, 0.0]), torch.tensor([0.0, 1.0])))
 
 
 def row_normalize(A: torch.Tensor) -> torch.Tensor:
@@ -610,4 +610,14 @@ def pairwise_distances(A: torch.Tensor) -> torch.Tensor:
         you still have to decide which axis each copy gets and how to collapse
         the result into distances. Do not use torch.cdist.
     """
-    raise NotImplementedError("Implement pairwise_distances()")
+    R=torch.zeros_like(A)
+    for i,v in enumerate(A):
+        for ii,vv in enumerate(v):
+            R[i][ii]= torch.sqrt(torch.sum(torch.square(A[i]-)))
+
+
+
+    return R
+
+A = torch.tensor([[0.0, 0.0], [3.0, 4.0]])
+print(pairwise_distances(A))
