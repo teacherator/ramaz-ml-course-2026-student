@@ -610,14 +610,21 @@ def pairwise_distances(A: torch.Tensor) -> torch.Tensor:
         you still have to decide which axis each copy gets and how to collapse
         the result into distances. Do not use torch.cdist.
     """
-    R=torch.zeros_like(A)
+    #R=torch.zeros_like(A)
+    A=torch.square(A)
+    R=torch.unsqueeze(A,2)-A
+
+    """
     for i,v in enumerate(A):
         for ii,vv in enumerate(v):
-            R[i][ii]= torch.sqrt(torch.sum(torch.square(A[i]-)))
-
+            R[i][ii]= torch.sqrt(torch.sum(torch.square(A[i])))
+    """
 
 
     return R
 
-A = torch.tensor([[0.0, 0.0], [3.0, 4.0]])
+A = torch.tensor([[0.0, 0.0], 
+                  [3.0, 4.0]])
 print(pairwise_distances(A))
+#tensor([[0., 5.],
+#        [5., 0.]])
