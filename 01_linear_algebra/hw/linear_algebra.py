@@ -595,7 +595,8 @@ def pairwise_distances(A: torch.Tensor) -> torch.Tensor:
         2-D tensor of shape (m, m).
 
     Example:
-        >>> A = torch.tensor([[0.0, 0.0], [3.0, 4.0]])
+        >>> A = torch.tensor([[0.0, 0.0], 
+                              [3.0, 4.0]])
         >>> pairwise_distances(A)
         tensor([[0., 5.],
                 [5., 0.]])
@@ -610,21 +611,56 @@ def pairwise_distances(A: torch.Tensor) -> torch.Tensor:
         you still have to decide which axis each copy gets and how to collapse
         the result into distances. Do not use torch.cdist.
     """
-    #R=torch.zeros_like(A)
-    A=torch.square(A)
-    R=torch.unsqueeze(A,2)-A
-
+    #B=A.detach().clone()
+   # R=torch.zeros(len(A),len(B))
+    #A=torch.square(A)
+    #R=torch.unsqueeze(A,2)-A
+    #A=torch.unsqueeze_copy(A,0)
+    #A2=torch.unsqueeze_copy(A,2)
+    #R=A1-A2
+   # C=A@torch.transpose(B,0,1)
+   # print(C)
     """
+    # below works for 2x2 
     for i,v in enumerate(A):
         for ii,vv in enumerate(v):
-            R[i][ii]= torch.sqrt(torch.sum(torch.square(A[i])))
+            try:
+                R[i][ii]=(((A[ii][i]-A[i][i])**2)+((A[ii][ii]-A[i][ii])**2))**.5
+            except IndexError as e:
+                print(f"Error handled: {e}")
+       """ 
+    #below works for 2x3 but not 2x2 
+    """ 
+    for i in range(len(R)):
+        for j in range(len(R[0])):
+            R[i][j]=(((A[j][i]-A[i][i])**2)+((A[j][j]-A[i][j])**2))**.5
+    
+    for i in range(len(R)): #rows
+            for j in range(len(R[0])): #cols
+                bi = i-1
+                if bi == -1: bi = 0
+                
+                R[i][j]=(torch.norm(A[i])+torch.norm(B[j])-2*torch.dot(A[i],torch.transpose(B[j],0,-1)))**.5
+    """ 
+
+    #here we go, no loops! 
+    # I used this artile to help figure this out https://medium.com/swlh/euclidean-distance-matrix-4c3e1378d87f
+    #and I donm't completley understand it, but almost do
+
     """
+    p1 = torch.sum(A**2,dim=1, keepdim=True)
+    p2 = torch.sum(B**2,dim=1)
+    p3 = -2 * (A @ torch.transpose(B,0,1))
+    """
+    #eturn torch.sqrt(p1+p2+p3)
+    #here it is in one line
+    return torch.sqrt(torch.sum(A**2,dim=1,keepdim=True) + torch.sum(A**2,dim=1)+ (-2 * (A @ torch.transpose(A,0,1))))
 
-
-    return R
-
-A = torch.tensor([[0.0, 0.0], 
-                  [3.0, 4.0]])
+A = torch.tensor([[0.0, 0.0], [3.0, 4.0]])
+#A = torch.tensor([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
 print(pairwise_distances(A))
 #tensor([[0., 5.],
 #        [5., 0.]])
+# [0.0,     1.0,        1.0],
+# [1.0,     0.0,        2.0**0.5],
+# [1.0,     2.0**0.5,   0.0],
