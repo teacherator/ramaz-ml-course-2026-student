@@ -45,9 +45,25 @@ def rotation_matrix(degrees: float) -> torch.Tensor:
         the `math` module has a converter. Then assemble those four entries
         into a 2x2 tensor.
     """
-    raise NotImplementedError("Implement rotation_matrix()")
+    R=torch.zeros(2,2)
+    rads=math.radians(degrees)
+    R[0][0]=R[1][1]=round(math.cos(rads),4)
+    R[1][0]=round(math.sin(rads),4)
+    R[0][1]=-1*R[1][0]
+    
+    #R[1][1]=round(math.cos(rads),2)
 
-
+    return R
+    
+#print(rotation_matrix(31.0))
+"""
+info = torch.finfo(torch.float32)
+print(f"Memory Size: {info.bits} bits ({info.bits // 8} bytes)")
+print(f"Maximum Value: {info.max}")
+print(f"Minimum Value: {info.min}")
+print(f"Machine Epsilon (Precision): {info.eps}")
+1.1920928955078125e-07
+"""
 def scaling_matrix(sx: float, sy: float) -> torch.Tensor:
     """Build the 2x2 matrix that scales x by sx and y by sy.
 
@@ -69,7 +85,7 @@ def scaling_matrix(sx: float, sy: float) -> torch.Tensor:
         tensor([[2.0000, 0.0000],
                 [0.0000, 0.5000]])
     """
-    raise NotImplementedError("Implement scaling_matrix()")
+    return torch.tensor([[sx,0],[0,sy]])
 
 
 def shear_matrix(k: float) -> torch.Tensor:
@@ -93,7 +109,7 @@ def shear_matrix(k: float) -> torch.Tensor:
         tensor([[1.0000, 0.8000],
                 [0.0000, 1.0000]])
     """
-    raise NotImplementedError("Implement shear_matrix()")
+    return torch.tensor([[1,k],[0,1]])
 
 
 def apply_transform(points: torch.Tensor, matrix: torch.Tensor) -> torch.Tensor:
@@ -126,8 +142,9 @@ def apply_transform(points: torch.Tensor, matrix: torch.Tensor) -> torch.Tensor:
         row equal M applied to the corresponding input point? Your return
         value must be (N, 2), one point per row.
     """
-    raise NotImplementedError("Implement apply_transform()")
-
+    return points @ torch.transpose(matrix,0,1)
+#pts = torch.tensor([[1.0, 0.0], [0.0, 1.0]])
+#print(apply_transform(pts, rotation_matrix(90.0)))
 
 # ── Teacher-provided plotting code — do not modify anything below ─────────────
 

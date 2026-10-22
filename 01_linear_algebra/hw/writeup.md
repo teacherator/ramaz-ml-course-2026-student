@@ -16,7 +16,12 @@ For each of the three transformations, describe in a sentence or two:
 - What changed about the arrow (size? angles? direction it points? proportions?).
 - What stayed the same.
 
-[your answer here]
+
+rotation: Only the direction the arrow points in changed. The direction it points in rotated by 60 degress. Everything else stayed the same.
+
+scaling: Here the direction the arrow points in stayed the samne, but the height is squished in half and the length stretched to twice its original size.
+
+shear: the arrow points in the same direction and is the same height as the original. What's changed is that the points below the x-axis have moved left ands the points above have moved right. The more the points are from the axis, the more they have moved.
 
 ---
 
@@ -33,7 +38,11 @@ figure and the printed matrices and arrow-tip positions:
   principle that $AB \neq BA$ in general. (Hint: in each
   composition, which transformation does the arrow experience first?)
 
-[your answer here]
+In the first result, the arrow is first scaled to be half as high and twice as long. That longer, shorter arrow is then rotated.
+In the second, the arrow is first rotated. Then that rotated arrow is scaled to half its size and twice its length.
+
+The order changes the outcome because matrix multiplication is noncommunative, $AB \neq BA$ in general. When the order of multiplication is changed, the order in which rows and columns nare mulitpled and summed changes. Except in certain cases, this changes the result. Visually, I can imagine the arrow changing first one way and then another. What amazes me is that is corresponds to the reverse order in which these tranform matrices are multiplied. The transform R@S first scales, then roates. Just as S@R first rotates, then scales.
+
 
 ---
 
