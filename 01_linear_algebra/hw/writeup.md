@@ -41,7 +41,7 @@ figure and the printed matrices and arrow-tip positions:
 In the first result, the arrow is first scaled to be half as high and twice as long. That longer, shorter arrow is then rotated.
 In the second, the arrow is first rotated. Then that rotated arrow is scaled to half its size and twice its length.
 
-The order changes the outcome because matrix multiplication is noncommunative, $AB \neq BA$ in general. When the order of multiplication is changed, the order in which rows and columns nare mulitpled and summed changes. Except in certain cases, this changes the result. Visually, I can imagine the arrow changing first one way and then another. What amazes me is that is corresponds to the reverse order in which these tranform matrices are multiplied. The transform R@S first scales, then roates. Just as S@R first rotates, then scales.
+The order changes the outcome because matrix multiplication is noncommunative, $AB \neq BA$ in general. When the order of multiplication is changed, the order in which rows and columns nare mulitpled and summed changes. Except in certain cases, this changes the result. Visually, I can imagine the arrow changing first one way and then another. What amazes me is that it corresponds to the reverse order in which these tranform matrices are multiplied. The transform R@S first scales, then roates. Just as S@R first rotates, then scales.
 
 
 ---
@@ -65,3 +65,15 @@ Using your own figure and printed output, explain:
   identifying which transformation acts first in each composition.
 
 [your answer here]
+The 60 degree rotation panel uses a transform matrix of 
+
+[ 0.5000, -0.8660],\
+[ 0.8660, 0.5000] 
+
+Transposed, this matrix is:
+
+[ 0.5000, 0.8660],\
+[ -0.8660, 0.5000] 
+
+What was point (2,0) gets transformed to  (1, 1.731) by taking the dot product of 2,0 and the tranposed matrix: (2.0×0.5000)+(0.0×-0.8660)=1.0+0.0=1.0open paren 2.0 cross 0.5000 close paren plus open paren 0.0 cross negative 0.8660 close paren equals 1.0 plus 0.0 equals 1.0
+(2.0×0.5000)+(0.0×−0.8660)=1.0+0.0=𝟏.𝟎

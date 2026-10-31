@@ -142,7 +142,9 @@ def apply_transform(points: torch.Tensor, matrix: torch.Tensor) -> torch.Tensor:
         row equal M applied to the corresponding input point? Your return
         value must be (N, 2), one point per row.
     """
-    return points @ torch.transpose(matrix,0,1)
+    R = points @ torch.transpose(matrix,0,1)
+    return R
+
 #pts = torch.tensor([[1.0, 0.0], [0.0, 1.0]])
 #print(apply_transform(pts, rotation_matrix(90.0)))
 
