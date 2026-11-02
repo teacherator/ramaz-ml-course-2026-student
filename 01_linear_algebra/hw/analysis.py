@@ -143,6 +143,7 @@ def apply_transform(points: torch.Tensor, matrix: torch.Tensor) -> torch.Tensor:
         value must be (N, 2), one point per row.
     """
     return points @ torch.transpose(matrix,0,1)
+    #return torch.transpose(points,0,1) @ matrix
 #pts = torch.tensor([[1.0, 0.0], [0.0, 1.0]])
 #print(apply_transform(pts, rotation_matrix(90.0)))
 

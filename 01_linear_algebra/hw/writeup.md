@@ -64,4 +64,12 @@ Using your own figure and printed output, explain:
   Support your answer with your two arrow-tip positions from Question 2,
   identifying which transformation acts first in each composition.
 
-[your answer here]
+
+
+In panel 4, we scale then rotate. The transformed point matrix has the same shape as the original point matrix, 2 by the number of points. Storing points in rows allows us transform every point with an efficent batch process of every single point by the weight matrix.
+
+Changing the order of the weight matrices changes the output. You can see this in the different locations of the arow point with R@S and S@R. In R@S it's at, [2.7834999561309814, 5.321000099182129]. In this case the arrow is scalled first, then rotated, as you can tell by the big change in y. 
+
+ With S@R its at:  [2.134000062942505, 1.4240000247955322]. If we look at the y value here, we can see that it was rotated first and then scaled down. The resulting value is much less.
+ 
+  Matix multiplication in noncommubniative, when we change the order, we change which numbers are being multiplied and summed together. 
