@@ -17,11 +17,11 @@ For each of the three transformations, describe in a sentence or two:
 - What stayed the same.
 
 
-rotation: Only the direction the arrow points in changed. The direction it points in rotated by 60 degress. Everything else stayed the same.
+Rotation: The arrow turned counterclockwise by 60 degrees. Its size, proportions, and angles stayed the same.
 
-scaling: Here the direction the arrow points in stayed the samne, but the height is squished in half and the length stretched to twice its original size.
+Scaling: The arrow was stretched to twice its width and compressed to half its height. Its proportions changed, while the origin stayed fixed.
 
-shear: the arrow points in the same direction and is the same height as the original. What's changed is that the points below the x-axis have moved left ands the points above have moved right. The more the points are from the axis, the more they have moved.
+Shear: Points kept the same y-coordinate, while their x-coordinates shifted to the right in proportion to their height. This slanted the arrow and changed its angles, while points on the x-axis stayed in place.
 
 ---
 
@@ -38,10 +38,9 @@ figure and the printed matrices and arrow-tip positions:
   principle that $AB \neq BA$ in general. (Hint: in each
   composition, which transformation does the arrow experience first?)
 
-In the first result, the arrow is first scaled to be half as high and twice as long. That longer, shorter arrow is then rotated.
-In the second, the arrow is first rotated. Then that rotated arrow is scaled to half its size and twice its length.
+In the first result, the arrow is first stretched to twice its width and compressed to half its height, then rotated. In the second, it is rotated first and then stretched and compressed along the coordinate axes.
 
-The order changes the outcome because matrix multiplication is noncommunative, $AB \neq BA$ in general. When the order of multiplication is changed, the order in which rows and columns nare mulitpled and summed changes. Except in certain cases, this changes the result. Visually, I can imagine the arrow changing first one way and then another. What amazes me is that is corresponds to the reverse order in which these tranform matrices are multiplied. The transform R@S first scales, then roates. Just as S@R first rotates, then scales.
+The order changes the outcome because matrix multiplication is not commutative: $AB \neq BA$ in general. With column-vector transformations, the rightmost matrix acts first, so $R @ S$ scales and then rotates, while $S @ R$ rotates and then scales. Since the scaling is different in the x and y directions, doing it before or after rotation produces different results.
 
 
 ---
@@ -64,12 +63,6 @@ Using your own figure and printed output, explain:
   Support your answer with your two arrow-tip positions from Question 2,
   identifying which transformation acts first in each composition.
 
+The 60-degree rotation panel shows that the matrix rotates each point without changing the shape's size. If $X$ contains $N$ points as rows, its shape is $(N, 2)$. Applying the matrix to every point gives another $(N, 2)$ array: each row is transformed as a column-vector product $Wp$, written for row-stored points as $p^T W^T$.
 
-
-In panel 4, we scale then rotate. The transformed point matrix has the same shape as the original point matrix, 2 by the number of points. Storing points in rows allows us transform every point with an efficent batch process of every single point by the weight matrix.
-
-Changing the order of the weight matrices changes the output. You can see this in the different locations of the arow point with R@S and S@R. In R@S it's at, [2.7834999561309814, 5.321000099182129]. In this case the arrow is scalled first, then rotated, as you can tell by the big change in y. 
-
- With S@R its at:  [2.134000062942505, 1.4240000247955322]. If we look at the y value here, we can see that it was rotated first and then scaled down. The resulting value is much less.
- 
-  Matix multiplication in noncommubniative, when we change the order, we change which numbers are being multiplied and summed together. 
+The arrow tip starts at $(3, 0.5)$. Under $R @ S$, scaling acts first and the tip lands at approximately $(2.7835, 5.3210)$. Under $S @ R$, rotation acts first and the tip lands at approximately $(2.1340, 1.4240)$. These different positions show that changing the order of the two weight matrices can change the output.

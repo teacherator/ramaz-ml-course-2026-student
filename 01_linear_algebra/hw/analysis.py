@@ -47,10 +47,10 @@ def rotation_matrix(degrees: float) -> torch.Tensor:
     """
     R=torch.zeros(2,2)
     rads=math.radians(degrees)
-    R[0][0]=R[1][1]=round(math.cos(rads),4)
-    R[1][0]=round(math.sin(rads),4)
-    R[0][1]=-1*R[1][0]
-    
+    R[0][0]=R[1][1]=math.cos(rads)
+    R[1][0]=math.sin(rads)
+    R[0][1]=-math.sin(rads)
+
     #R[1][1]=round(math.cos(rads),2)
 
     return R
