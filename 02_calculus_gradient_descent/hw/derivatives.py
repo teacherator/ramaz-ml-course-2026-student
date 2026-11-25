@@ -45,8 +45,10 @@ def manual_gradient_quadratic(a: float, b: float, x_val: float) -> float:
         Apply the power rule to each term separately, then add.
         Recall: d/dx [c * x**n] = c * n * x**(n-1).
     """
-    raise NotImplementedError("Implement manual_gradient_quadratic()")
+    d= a*x_val**2 + b*x_val
+    return d
 
+print( manual_gradient_quadratic(3.0, 2.0, 1.0))
 
 def manual_gradient_composite(x_val: float) -> float:
     """Return d/dx of f(x) = (x**3 + 2)**2 evaluated at x = x_val.
@@ -197,7 +199,7 @@ def _print_row(label: str, manual_val: float, auto_val: float) -> None:
     print(f"{label:<44} {manual_val:>12.4f} {auto_val:>12.4f} {diff:>10.2e}")
 
 
-if __name__ == "__main__":
+if __name__ == "__main __":
     header = f"{'function @ point':<44} {'manual':>12} {'autograd':>12} {'|diff|':>10}"
     print(header)
     print("-" * len(header))
